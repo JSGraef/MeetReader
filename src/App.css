@@ -1,24 +1,23 @@
-.App {
-  text-align: center;
+.swimmer h4 {
+  color: #fff;
+  padding-top: 0;
+  margin: 0;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.swimmer h6 {
+  padding: 0;
+  margin: 0;
+  line-height: 1.5em;
+  font-size: 1em;
+  color: #ccc;
 }
 
-.App-header {
+.swimmer {
+  padding-bottom: 24px;
+  border-top: 0px solid #333;
+}
+
+.swimmer-header {
+  padding: 5px;
   background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

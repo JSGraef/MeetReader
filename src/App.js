@@ -19,6 +19,7 @@ class App extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.readFile = this.readFile.bind(this);
     this.parseFileContents = this.parseFileContents.bind(this);
+    this.initialize = this.initialize.bind(this);
 
     this.parseA0 = this.parseA0.bind(this);
     this.parseB1 = this.parseB1.bind(this);
@@ -38,11 +39,23 @@ class App extends Component {
     this.parseZ0 = this.parseZ0.bind(this);
   }
 
+ // If a new file is read, get rid of 100% of the old stuff
+  initialize() {
+    this.setState({
+      lines: [],
+      meet: {},
+      meetInfo: {},
+      teams: []
+    });
+  }
+
   onFormSubmit(e) {
     e.preventDefault();
     const file = this.refs.file.files[0];
     if(file === 'undefined') 
       return;
+    
+    this.initialize();
 
     this.readFile(file);
     this.setState({filename: file.name});

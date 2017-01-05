@@ -6,14 +6,9 @@ const Team = (props) => {
     return (            
     <div key={props.team.teamCode}>
         <h2><a name={props.team.teamCode}>{props.team.teamName}</a></h2>
-        <h4>{props.team.teamCode}</h4>
-        <div className="mdl-grid">
-            {swimmerKeys.map(key => 
-                { return (
-                    <div className="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone mdl-cell--4-col-tablet" key={key}>
-                        <Swimmer swimmer={props.team.swimmers[key]} />
-                    </div>
-                )}
+        <div className="mdl-grid mdl-grid--no-spacing">
+            {swimmerKeys.map(key =>
+                { return <Swimmer key={key} swimmer={props.team.swimmers[key]} /> }
             )}
         </div>
     </div>
