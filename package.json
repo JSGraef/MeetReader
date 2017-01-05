@@ -3,10 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "react-flexbox-grid": "^0.10.2",
+    "react-md": "^1.0.0",
+    "react-pure-grid": "^2.1.1",
     "react-scripts": "0.8.4"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
+    "flexboxgrid": "^6.3.1",
     "react": "^15.4.1",
+    "react-addons-css-transition-group": "^15.4.1",
+    "react-addons-transition-group": "^15.4.1",
     "react-dom": "^15.4.1"
   },
   "scripts": {

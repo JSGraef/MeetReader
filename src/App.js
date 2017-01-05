@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import './App.css';
 import Team from './Team';
+import TeamList from './TeamList';
 
 class App extends Component {
   constructor() {
     super();
+    injectTapEventPlugin();
 
     this.state = {
       lines: [],
@@ -264,6 +268,7 @@ class App extends Component {
     const courseCode2   = line.substring(105,106).trim();
     const swimoffTime   = line.substring(106,114).trim();
     const courseCode3   = line.substring(114,115).trim();
+    const finalsTime    = line.substring(115,124).trim();
     const prelimHeatNum = line.substring(124,126).trim();
     const prelimLaneNum = line.substring(126,128).trim();
     const finalsHeatNum = line.substring(128,130).trim();
@@ -277,7 +282,7 @@ class App extends Component {
     const event = {
       swimmerName, ussNum, attachCode, citizenCode, birthDate, swimmerAge, sexCode,eventSex, eventDist, 
       strokeCode, eventNum, eventAgeCode, dateOfSwim, seedTime, courseCode, prelimTime, courseCode2, swimoffTime, 
-      courseCode3,   prelimHeatNum, prelimLaneNum, finalsHeatNum, finalsLaneNum, prelimPlace, finalsPlace, pointsScored, 
+      courseCode3, finalsTime, prelimHeatNum, prelimLaneNum, finalsHeatNum, finalsLaneNum, prelimPlace, finalsPlace, pointsScored, 
       eventTimeClass, flightStatus, 
       splits: []   
     }
@@ -547,18 +552,27 @@ class App extends Component {
   render() {
     
     return (
-      <div>
-        <form onSubmit={this.onFormSubmit}>
-          <input type="file" ref="file" name="file" id="file"/>
-          <button type="submit">Submit</button>
-        </form>
-
-        <hr/>
-        <h1>{this.state.meetInfo.meetName}</h1>
-        { this.state.teams.map(team => 
-          {return <Team key={team.teamCode} team={team} />}
-        )}
-      </div>
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--12-col">
+              <form onSubmit={this.onFormSubmit}>
+                <input type="file" ref="file" name="file" id="file"/>
+                <button type="submit">Submit</button>
+              </form>
+              <hr/>
+              <h1>{this.state.meetInfo.meetName}</h1>
+          </div>
+          <div className="mdl-cell mdl-cell--2-col">
+            <h6>TEAMS</h6>
+            { this.state.teams.map(team => 
+                {return <TeamList key={team.teamCode} team={team} />}
+            )}
+          </div>
+          <div className="mdl-cell mdl-cell--10-col">
+              { this.state.teams.map(team => 
+                {return <Team key={team.teamCode} team={team} />}
+              )}
+          </div>
+        </div>
     );
   }
 }
