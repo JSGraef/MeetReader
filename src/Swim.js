@@ -1,10 +1,8 @@
 import React from 'react';
 import U from './utils';
-import {ListItem} from 'material-ui/List';
 
 const Swim = (props) => {
     const swim = props.swim;
-    //console.log(props);
 
     const finalsTime = swim.finalsTime.substring(0,swim.finalsTime.length-1);
 

@@ -1,9 +1,7 @@
 import React from 'react';
 import Swim from './Swim';
 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import {List} from 'material-ui/List';
-import FlatButton from 'material-ui/FlatButton';
+import {CardTitle} from 'material-ui/Card';
 
 const Swimmer = (props) => {
     const swim = props.swimmer.swims[0];
