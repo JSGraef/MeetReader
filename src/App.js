@@ -135,12 +135,7 @@ class App extends Component {
           break;
         default: break;
       }
-
-      // if(header === 'D3')
-      //   console.log('US #: ', line.substring(2,16), ' NAME: ', line.substring(16, 31));
     }
-
-    console.log('done reading');
   }
 
   //-------------------------------------------

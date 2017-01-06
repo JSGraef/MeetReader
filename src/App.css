@@ -1,3 +1,8 @@
+.swim-finalTime {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
 .swimmer h4 {
   color: #fff;
   padding-top: 0;
@@ -19,5 +24,39 @@
 
 .swimmer-header {
   padding: 5px;
-  background-color: #222;
+  background-color: #455A64;
+}
+
+.swim-diffPos {
+  color: #F44336 !important;
+  font-size: 1.1em;
+}
+
+.swim-diffNeg {
+  color:#4CAF50 !important;
+  font-size: 1.1em;
+}
+
+.swim-split {
+  font-size: 0.9em;
+  color: #78909C;
+  padding-right: 16px;
+  font-style: italic;
+}
+
+.swim-splitTitle {
+  font-size: 0.80em;
+  font-weight: bold;
+  color: #78909C;
+  font-style: italic;
+}
+
+tr [colspan="4"] {
+    text-align: left;
+}
+
+
+.swim-eventTitle {
+  font-weight: bold;
+  font-size: 1.2em;
 }

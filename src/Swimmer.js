@@ -10,7 +10,7 @@ const Swimmer = (props) => {
                 <h6>{`Age ${swim.swimmerAge}`}</h6>
             </div>
             
-            <table className="mdl-data-table">
+            <table className="mdl-data-table" width="100%">
             <thead>
                 <tr>
                     <th>Event</th>
@@ -21,11 +21,11 @@ const Swimmer = (props) => {
                     <th>Points Scored</th>
                 </tr>
             </thead>
-            <tbody>
+            
                 {props.swimmer.swims.map( swim => {
                     return <Swim key={`${swim.eventDist}${swim.strokeCode}${swim.ussNum}`} swim={swim} />
                 })}
-            </tbody>
+            
             </table>
         </div>
     );
