@@ -566,15 +566,18 @@ class App extends Component {
                 <button type="submit">Submit</button>
               </form>
               <hr/>
-              <h1>{this.state.meetInfo.meetName}</h1>
           </div>
           <div className="mdl-cell mdl-cell--2-col">
-            <h6>TEAMS</h6>
-            { this.state.teams.map(team => 
-                {return <TeamList key={team.teamCode} team={team} />}
-            )}
+            <div className="sidenav">
+              <h6>TEAMS</h6>
+              { this.state.teams.map(team => 
+                  {return <TeamList key={team.teamCode} team={team} />}
+              )}
+              <hr />
+            </div>
           </div>
           <div className="mdl-cell mdl-cell--10-col">
+            <h1>{this.state.meetInfo.meetName}</h1>
               { this.state.teams.map(team => 
                 {return <Team key={team.teamCode} team={team} />}
               )}

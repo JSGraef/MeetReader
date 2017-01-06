@@ -60,3 +60,15 @@ tr [colspan="4"] {
   font-weight: bold;
   font-size: 1.2em;
 }
+@media (min-width: 840px) {
+.sidenav {
+  position: fixed;
+  width: 120px;
+  left: 16px;
+  top: 50px;
+  z-index: 2000;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: block;
+}
+}
