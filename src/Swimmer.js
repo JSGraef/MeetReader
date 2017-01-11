@@ -1,5 +1,6 @@
 import React from 'react';
 import Swim from './Swim';
+import U from './utils';
 
 const Swimmer = (props) => {
     const swim = props.swimmer.swims[0];
@@ -23,7 +24,7 @@ const Swimmer = (props) => {
             </thead>
             
                 {props.swimmer.swims.map( swim => {
-                    return <Swim key={`${swim.eventDist}${swim.strokeCode}${swim.ussNum}`} swim={swim} />
+                    return <Swim key={U.guid()} swim={swim} />
                 })}
             
             </table>

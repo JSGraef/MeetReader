@@ -476,6 +476,12 @@ class App extends Component {
 
     let teams = this.state.teams;
     let swimmer = teams[teams.length -1].swimmers[ussNum];
+
+    // Swimmer was never entered in, just skip it for now
+    // TODO - need to handle this
+    if(swimmer === undefined) {
+      return;
+    }
     swimmer.swims[ swimmer.swims.length -1 ].splits.push(splitRec);
 
     // Update team with swimmer
