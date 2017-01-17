@@ -1,4 +1,5 @@
 module.exports = {
+    // converts sd3 stroke code to stroke name
     getStrokeFromCode: function(code) {
     let stroke = '';
     switch(code) {
@@ -14,6 +15,7 @@ module.exports = {
     return stroke;
   },
 
+ // Calculates time improvement between two swim times. Returns nothing if not available
   timeDiff: function(time1, time2) {
     if(time1.includes('NT') || time2.includes('NT') || time2.includes('NS') || time1.includes('NS') )
         return "";
@@ -41,6 +43,7 @@ module.exports = {
     return timeDiff;    
   },
 
+ // returns random new guid
   guid: function() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);

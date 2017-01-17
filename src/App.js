@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import './App.css';
 import Team from './Team';
 import TeamList from './TeamList';
