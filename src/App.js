@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Table } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { Header, Sider } = Layout;
 
 import { Route, Link } from 'react-router-dom';
 import Home from './Home';
-import Meet from './Meet';
+
+import MeetReader from './MeetReader/MeetReader';
 
 import './App.css';
 
@@ -24,8 +25,8 @@ class App extends Component {
               style={{ lineHeight: '64px'}}
             >
               <Menu.Item key="home"><Link to="/">Home</Link></Menu.Item>
-              <Menu.Item key="meet"><Link to="/meetf">Meet</Link></Menu.Item>
-              <Menu.Item key="3">nav 3</Menu.Item>
+              <Menu.Item key="meet"><Link to="/meet">Meet</Link></Menu.Item>
+              <Menu.Item key="import"><Link to="/import">Import</Link></Menu.Item>
             </Menu>
           </Header>
 
@@ -60,7 +61,9 @@ class App extends Component {
             </Sider>
 
             <Route exact path="/" component={Home}/>
-            <Route exact path="/meet" component={Meet} />
+            <Route path="/meet" component={MeetReader} />
+            {/*<Route exact path="/import" component={MeetReader}/>*/}
+            
 
           </Layout>
         </Layout>

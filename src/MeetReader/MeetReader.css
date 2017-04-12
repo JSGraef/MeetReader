@@ -1,0 +1,107 @@
+.swim-finalTime {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.swimmer h4 {
+  color: #333;
+  padding-top: 0;
+  margin: 0;
+  font-weight: bold;
+}
+
+.swimmer h6 {
+  padding: 0;
+  margin: 0;
+  line-height: 1.5em;
+  font-size: 1em;
+  color: #ccc;
+}
+
+h6 {
+  border-bottom: 2px solid #455A64;
+  padding: 0;
+  margin: 0;
+}
+
+.swimmer {
+  padding-bottom: 24px;
+  border-top: 0px solid #333;
+}
+
+.swimmer-header {
+  padding: 5px 5px 5px 0;
+  border-bottom: 4px solid #455A64;
+}
+
+.swim-diffPos {
+  color: #F44336 !important;
+  font-size: 1.1em;
+}
+
+.swim-diffNeg {
+  color:#4CAF50 !important;
+  font-size: 1.1em;
+}
+
+.swim-split {
+  font-size: 0.9em;
+  color: #78909C;
+  padding-right: 16px;
+  font-style: italic;
+}
+
+.swim-splitTitle {
+  font-size: 0.80em;
+  font-weight: bold;
+  color: #78909C;
+  font-style: italic;
+}
+
+tr [colspan="6"] {
+    text-align: left;
+}
+
+tr [colspan="2"] {
+    text-align: right;
+}
+
+.swim-event-tr td {
+  border-top: 1px solid #eee;
+}
+
+.swim-eventTitle {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+td {
+  padding: 5px;
+}
+
+th {
+  text-align: left;
+}
+
+table {
+  background-color: #fefefe;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 8px;
+}
+
+
+@media (min-width: 840px) {
+.sidenav {
+  position: fixed;
+  width: 160px;
+  left: 16px;
+  top: 50px;
+  z-index: 2000;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: block;
+}
+}

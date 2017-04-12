@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Table } from 'antd';
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
-
-import { Route } from 'react-router-dom';
+import { Layout, Breadcrumb, Table } from 'antd';
+const { Content } = Layout;
 
 const columns = [
   { title: 'Place', dataIndex: 'place', key: 'place' },

@@ -1,29 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Table } from 'antd';
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
-
-import { Route } from 'react-router-dom';
-
-const columns = [
-  { title: 'Place', dataIndex: 'place', key: 'place' },
-  { title: 'Name', dataIndex: 'name', key: 'name' },
-  { title: 'Team', dataIndex: 'team', key: 'team' },
-  { title: 'Seed Time', dataIndex: 'seedtime', key: 'seedtime' },
-  { title: 'Prelim Time', dataIndex: 'prelimtime', key: 'prelimtime' },
-  { title: 'Finals Time', dataIndex: 'finalstime', key: 'finalstime' },
-  { title: 'Time Adjustment', dataIndex: 'timeadjustment', key: 'timeadjustment' },
-  { title: 'Points Scored', dataIndex: 'pointsscored', key: 'pointsscored' },
-];
-
-const data = [
-  { key: 1, place: 1, name: 'Brown, John', team: 'MRTS', seedtime: '2:20.21', prelimtime: '', finalstime: '2:13.67', timeadjustment: '-6.54', pointsscored: 20, splits: "SPLITS: 30.37 (30.37)  1:04.36 (33.99)  1:39.68 (35.32)  2:13.67 (33.99)"},
-  { key: 2, place: 2, name: 'Alkaline, Harry', team: 'MRSSL', seedtime: '2:17.83', prelimtime: '', finalstime: '2:13.80', timeadjustment: '-4.03', pointsscored: 17, splits: "SPLITS: 30.37 (30.37)  1:04.36 (33.99)  1:39.68 (35.32)  2:13.67 (33.99)"},
-  { key: 3, place: 3, name: 'Corkran, Samuel', team: 'MRVAC', seedtime: '2:30.00', prelimtime: '', finalstime: '2:25.48', timeadjustment: '-4.52', pointsscored: 16, splits: "SPLITS: 30.37 (30.37)  1:04.36 (33.99)  1:39.68 (35.32)  2:13.67 (33.99)"},
-  { key: 4, place: 4, name: 'Garett, Timothy', team: 'MRTS', seedtime: '2:33.57', prelimtime: '', finalstime: '2:30.92', timeadjustment: '-2.65', pointsscored: 15, splits: "SPLITS: 30.37 (30.37)  1:04.36 (33.99)  1:39.68 (35.32)  2:13.67 (33.99)"},
-  { key: 5, place: 5, name: 'Vu, Yam', team: 'MRVAC', seedtime: '2:46.48', prelimtime: '', finalstime: '2:35.28', timeadjustment: '-11.20', pointsscored: 14, splits: "SPLITS: 30.37 (30.37)  1:04.36 (33.99)  1:39.68 (35.32)  2:13.67 (33.99)"},
-  { key: 6, place: 6, name: 'Greene, Barry', team: 'MRSSL', seedtime: '2:28.25', prelimtime: '', finalstime: '2:37.16', timeadjustment: '+8.91', pointsscored: 13, splits: "SPLITS: 30.37 (30.37)  1:04.36 (33.99)  1:39.68 (35.32)  2:13.67 (33.99)"},
- ];
+import { Layout, Breadcrumb} from 'antd';
+const { Content } = Layout;
 
 class Home extends Component {
   render() {
