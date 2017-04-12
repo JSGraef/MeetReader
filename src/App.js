@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, BackTop } from 'antd';
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 
@@ -36,6 +36,7 @@ class App extends Component {
     return (
       <div>
         <Layout style={{ height: '100%' }}>
+          <BackTop />
 
           <Header >
             <div className="logo" />
