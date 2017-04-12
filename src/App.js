@@ -7,10 +7,31 @@ import { Route, Link } from 'react-router-dom';
 import Home from './Home';
 
 import MeetReader from './MeetReader/MeetReader';
+import ImportMeet from './MeetReader/ImportMeet';
 
 import './App.css';
+import U from './MeetReader/utils';
 
 class App extends Component {
+
+  constructor() {
+        super();
+
+        this.state = {
+            teams: [],
+            events: []
+        }
+
+        this.onImportMeet = this.onImportMeet.bind(this);
+    }
+
+  onImportMeet(events, teams) {
+    if(events === undefined || teams === undefined)
+      return;
+
+    this.setState({events, teams});
+  }
+
   render() {
     return (
       <div>
@@ -33,38 +54,30 @@ class App extends Component {
 
           <Layout>
             <Sider width={200} style={{ background: '#fff' }}>
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                style={{ height: '100%' }}
-              >
-                <SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
-                  <Menu.Item key="1">option1</Menu.Item>
-                  <Menu.Item key="2">option2</Menu.Item>
-                  <Menu.Item key="3">option3</Menu.Item>
-                  <Menu.Item key="4">option4</Menu.Item>
+
+              <Menu mode="inline" defaultOpenKeys={['teams']} style={{ height: '100%' }} >
+
+                <SubMenu key="teams" title={<span><Icon type="user" />Teams</span>}>
+                  { this.state.teams.map( team => { return <Menu.Item key={team.teamCode}><Link to={`/meet/team/${team.teamCode}`}>{team.teamCode}</Link></Menu.Item> } ) }
                 </SubMenu>
-                <SubMenu key="sub2" title={<span><Icon type="laptop" />subnav 2</span>}>
-                  <Menu.Item key="5">option5</Menu.Item>
-                  <Menu.Item key="6">option6</Menu.Item>
-                  <Menu.Item key="7">option7</Menu.Item>
-                  <Menu.Item key="8">option8</Menu.Item>
+
+                <SubMenu key="events" title={<span><Icon type="laptop" />Events</span>}>
+                  <Menu.Item key="5">Show All</Menu.Item>
+                  { this.state.events.map( event => { 
+                    if(event.length === 0)
+                      return '';
+                    return <Menu.Item key={event.eventNum}><Link to={`/meet/events/${event[0].eventNum}`}>{U.parseEventTitle(event[0])}</Link></Menu.Item> 
+                    })}
                 </SubMenu>
-                <SubMenu key="sub3" title={<span><Icon type="notification" />subnav 3</span>}>
-                  <Menu.Item key="9">option9</Menu.Item>
-                  <Menu.Item key="10">option10</Menu.Item>
-                  <Menu.Item key="11">option11</Menu.Item>
-                  <Menu.Item key="12">option12</Menu.Item>
-                </SubMenu>
+
               </Menu>
+
             </Sider>
 
             <Route exact path="/" component={Home}/>
-            <Route path="/meet" component={MeetReader} />
-            {/*<Route exact path="/import" component={MeetReader}/>*/}
+            <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
+            <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
             
-
           </Layout>
         </Layout>
          
