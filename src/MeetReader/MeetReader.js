@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
-
-import './MeetReader.css';
-import TeamList from './TeamList';
-import MRDashboard from './MRDashboard';
-import U from './utils';
-import {Link, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 import MREvents from './MREvents';
 import MREvent from './MREvent';
 import MRTeam from './MRTeam';
 import MRSwimmer from './MRSwimmer';
 
+import './MeetReader.css';
+
 import { Layout, Breadcrumb } from 'antd';
 const { Content } = Layout;
-
-import DropzoneComponent from 'react-dropzone-component';
-import 'react-dropzone-component/styles/filepicker.css';
-import 'dropzone/dist/min/dropzone.min.css';
 
 class MeetReader extends Component {
 

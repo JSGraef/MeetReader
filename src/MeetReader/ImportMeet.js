@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 
 import './MeetReader.css';
-import TeamList from './TeamList';
-import MRDashboard from './MRDashboard';
 import U from './utils';
-import {Link, Route, Redirect} from 'react-router-dom';
-
+import {Redirect} from 'react-router-dom';
 
 import { Layout, Breadcrumb, Alert } from 'antd';
 const { Content } = Layout;

@@ -63,11 +63,11 @@ class App extends Component {
                 </SubMenu>
 
                 <SubMenu key="events" title={<span><Icon type="laptop" />Events</span>}>
-                  <Menu.Item key="5">Show All</Menu.Item>
+                  <Menu.Item key="showall"><Link to={`/meet/events`}>Show All</Link></Menu.Item>
                   { this.state.events.map( event => { 
                     if(event.length === 0)
                       return '';
-                    return <Menu.Item key={event.eventNum}><Link to={`/meet/events/${event[0].eventNum}`}>{U.parseEventTitle(event[0])}</Link></Menu.Item> 
+                    return <Menu.Item key={event[0].eventNum}><Link to={`/meet/events/${event[0].eventNum}`}>{U.parseEventTitle(event[0])}</Link></Menu.Item> 
                     })}
                 </SubMenu>
 
