@@ -10,7 +10,7 @@ class Home extends Component {
             <Breadcrumb style={{ margin: '12px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
             </Breadcrumb>
-            <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280, height: '100%' }}>
+            <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
                 <p>Welcome to the home dashboard </p>
             </Content>
         </Layout>

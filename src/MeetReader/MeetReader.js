@@ -15,14 +15,14 @@ class MeetReader extends Component {
 
   render() {    
     return (
-        <Layout style={{ padding: '0 24px 24px', height: '100%' }}>
+        <Layout style={{ padding: '0 24px 24px' }}>
           
             <Breadcrumb style={{ margin: '12px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>Import</Breadcrumb.Item>
+                <Breadcrumb.Item>Meet</Breadcrumb.Item>
             </Breadcrumb>
 
-            <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280, height: '100%' }}>
+            <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280}}>
                   
                 <Route exact path={`${this.props.match.url}/events`} render={ (props) => <MREvents events={this.props.events} {...props}/> }/>
                 <Route path={`${this.props.match.url}/events/:eventid`} render={ (props) => <MREvent events={this.props.events} {...props}/> }/>

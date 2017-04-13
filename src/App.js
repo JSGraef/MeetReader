@@ -33,8 +33,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Layout style={{ height: '100%' }}>
+        <Layout style={{ height: '100vh' }}>
           <BackTop />
 
           <Header >
@@ -53,18 +52,17 @@ class App extends Component {
 
 
           <Layout>
-            <Sider width={200} style={{ background: '#fff' }}>
+            <Sider width={200} style={{ background: '#fff', overflow: 'auto' }}>
               <Sidebar teams={this.state.teams} events={this.state.events} />
             </Sider>
 
+            
             <Route exact path="/" component={Home}/>
             <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
             <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
             
           </Layout>
         </Layout>
-         
-      </div>
     );
   }
 }

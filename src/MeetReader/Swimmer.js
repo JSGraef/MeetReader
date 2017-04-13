@@ -10,7 +10,7 @@ const Swimmer = (props) => {
     const swim = props.swimmer.swims[0];
 
     return (
-        <div className="mdl-cell mdl-cell--12-col swimmer">
+        <div className="swimmer">
             <div className="swimmer-header">
                 <h4>{swim.swimmerName}</h4>
             </div>

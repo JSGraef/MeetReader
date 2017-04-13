@@ -20,7 +20,7 @@ const EventSwimRelay = (props) => {
         <tbody>
             <tr>
                 <td>{relay.finalsPlace === '0' ? '-' : relay.finalsPlace}</td>
-                <td className="swim-eventTitle mdl-data-table__cell--non-numeric">{relay.teamCode} {relay.relTeamName}</td>
+                <td className="swim-eventTitle">{relay.teamCode} {relay.relTeamName}</td>
                 <td>{relay.seedTime}</td>
                 <td>{relay.prelimTime}</td>
                 <td className="swim-finalTime">{relay.finalsTime}</td>

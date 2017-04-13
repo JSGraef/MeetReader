@@ -92,7 +92,7 @@ const Event = (props) => {
     }
 
     return (
-        <div className="mdl-cell mdl-cell--12-col swimmer">
+        <div className="swimmer">
             <div className="swimmer-header">
                 <h4>{U.parseEventTitle(event[0])}</h4>
             </div>

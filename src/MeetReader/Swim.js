@@ -24,7 +24,7 @@ const Swim = (props) => {
     return (
         <tbody>
             <tr className="swim-event-tr">
-                <td className="swim-eventTitle mdl-data-table__cell--non-numeric">
+                <td className="swim-eventTitle">
                     <Link to={`/meet/events/${swim.eventNum}`}>{`${swim.eventDist} ${U.getStrokeFromCode(swim.strokeCode)}`}</Link>
                 </td>
                 <td>{swim.seedTime}</td>
