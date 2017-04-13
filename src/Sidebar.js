@@ -13,11 +13,11 @@ const Sidebar = (props) => {
     return (             
         <Menu mode="inline" defaultOpenKeys={['teams']} style={{ height: '100%' }} >
 
-            <SubMenu key="teams" title={<span><Icon type="user" />Teams</span>}>
+            <SubMenu key="teams" title={<span><Icon type="usergroup-add" />Teams</span>}>
                 { props.teams.map( team => { return <Menu.Item key={team.teamCode}><Link to={`/meet/team/${team.teamCode}`}>{team.teamCode}</Link></Menu.Item> } ) }
             </SubMenu>
 
-            <SubMenu key="events" title={<span><Icon type="laptop" />Events</span>}>
+            <SubMenu key="events" title={<span><Icon type="solution" />Events</span>}>
                 <Menu.Item key="showall"><Link to={`/meet/events`}>Show All</Link></Menu.Item>
                     { props.events.map( event => { 
                         if(event.length === 0)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Menu, BackTop } from 'antd';
-const { Header, Sider } = Layout;
+import { Layout, Menu, BackTop, Breadcrumb } from 'antd';
+const { Header, Sider, Content } = Layout;
 
 import { Route, Link } from 'react-router-dom';
 import Home from './Home';
@@ -33,7 +33,7 @@ class App extends Component {
 
   render() {
     return (
-        <Layout style={{ height: '100vh' }}>
+        <Layout>
           <BackTop />
 
           <Header >
@@ -51,15 +51,25 @@ class App extends Component {
           </Header>
 
 
-          <Layout>
+          <Layout style={{minHeight: '100vh'}}>
             <Sider width={200} style={{ background: '#fff', overflow: 'auto' }}>
               <Sidebar teams={this.state.teams} events={this.state.events} />
             </Sider>
 
-            
-            <Route exact path="/" component={Home}/>
-            <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
-            <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
+            <Layout style={{ padding: '0 24px 24px', height: '100%'}}>
+
+              <Breadcrumb style={{ margin: '12px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>Import</Breadcrumb.Item>
+              </Breadcrumb>
+
+              <Content style={{ background: '#fff', padding: 24, margin: 0, overflow: 'initial'}}>
+                
+                <Route exact path="/" component={Home}/>
+                <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
+                <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
+              </Content>
+            </Layout>
             
           </Layout>
         </Layout>

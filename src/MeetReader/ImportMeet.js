@@ -4,8 +4,7 @@ import './MeetReader.css';
 import U from './utils';
 import {Redirect} from 'react-router-dom';
 
-import { Layout, Breadcrumb, Alert } from 'antd';
-const { Content } = Layout;
+import { Alert } from 'antd';
 
 import DropzoneComponent from 'react-dropzone-component';
 import 'react-dropzone-component/styles/filepicker.css';
@@ -260,23 +259,14 @@ class ImportMeet extends Component {
             return <Redirect to="/meet" />
         
         return (
-            <Layout style={{ padding: '0 24px 24px', height: '100%' }}>
+            <div>
+                <h1>Read Any Meet Result</h1>
+                <h3>Import any .sd3 or .cl2 meet file to see a list of swimmers and their times, splits, improvements, and points scored.</h3>
+                <br />
+                <DropzoneComponent config={componentConfig} eventHandlers={eventHandlers} djsConfig={djsConfig} />
 
-                <Breadcrumb style={{ margin: '12px 0' }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>Import</Breadcrumb.Item>
-                </Breadcrumb>
-
-                <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280, height: '100%' }}>
-                    <h1>Read Any Meet Result</h1>
-                    <h3>Import any .sd3 or .cl2 meet file to see a list of swimmers and their times, splits, improvements, and points scored.</h3>
-                    <br />
-                    <DropzoneComponent config={componentConfig} eventHandlers={eventHandlers} djsConfig={djsConfig} />
-
-                    { this.state.message ? <Alert message={this.state.text} type={this.state.type} /> : ''}
-                </Content>
-
-            </Layout>
+                { this.state.message ? <Alert message={this.state.text} type={this.state.type} /> : ''}
+            </div>
         );
     }
 }
