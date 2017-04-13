@@ -52,7 +52,9 @@ class App extends Component {
 
 
           <Layout style={{minHeight: '100vh'}}>
-            <Sider width={200} style={{ background: '#fff', overflow: 'auto' }}>
+            
+            
+            <Sider width={200} style={{ background: '#fff' }}>
               <Sidebar teams={this.state.teams} events={this.state.events} />
             </Sider>
 
@@ -63,12 +65,14 @@ class App extends Component {
                 <Breadcrumb.Item>Import</Breadcrumb.Item>
               </Breadcrumb>
 
-              <Content style={{ background: '#fff', padding: 24, margin: 0, overflow: 'initial'}}>
+              <Content style={{ background: '#fff', padding: 24, margin: 0}}>
                 
                 <Route exact path="/" component={Home}/>
                 <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
                 <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
               </Content>
+            
+            
             </Layout>
             
           </Layout>
