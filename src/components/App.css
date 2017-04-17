@@ -11,5 +11,16 @@ html, body, .app {
   border-radius: 6px;
   margin: 16px 28px 16px 0;
   float: left;
-  background-image: url('./images/TeamCaptainLogo_30h.png');
+  background-image: url('../images/TeamCaptainLogo_30h.png');
+}
+
+.login-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import AuthHome from './components/AuthHome';
 import './index.css';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 ReactDOM.render(
   <Router>
-    <App />
+    <AuthHome />
   </Router>,
   document.getElementById('root')
 );

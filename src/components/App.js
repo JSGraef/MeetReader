@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Layout, Menu, BackTop, Breadcrumb } from 'antd';
 const { Header, Sider, Content } = Layout;
 
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Redirect } from 'react-router-dom';
 import Home from './Home';
 
 import MeetReader from './MeetReader/MeetReader';
 import ImportMeet from './MeetReader/ImportMeet';
 import Sidebar from './Sidebar';
+
+import WrappedLoginForm from './LoginForm';
 
 import './App.css';
 
@@ -32,8 +34,9 @@ class App extends Component {
   }
 
   render() {
+
     return (
-        <Layout>
+        <Layout >
           <BackTop />
 
           <Header >
@@ -50,10 +53,7 @@ class App extends Component {
             </Menu>
           </Header>
 
-
           <Layout style={{minHeight: '100vh'}}>
-            
-            
             <Sider width={200} style={{ background: '#fff' }}>
               <Sidebar teams={this.state.teams} events={this.state.events} />
             </Sider>
@@ -62,7 +62,7 @@ class App extends Component {
 
               <Breadcrumb style={{ margin: '12px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>Import</Breadcrumb.Item>
+                <Breadcrumb.Item>{this.state.location}</Breadcrumb.Item>
               </Breadcrumb>
 
               <Content style={{ background: '#fff', padding: 24, margin: 0}}>
@@ -70,12 +70,13 @@ class App extends Component {
                 <Route exact path="/" component={Home}/>
                 <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
                 <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
+              
               </Content>
             
-            
             </Layout>
-            
           </Layout>
+            
+  
         </Layout>
     );
   }
