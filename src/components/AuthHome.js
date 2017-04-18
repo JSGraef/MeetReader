@@ -3,8 +3,7 @@ import App from './App';
 import WrappedLoginForm from './LoginForm';
 
 import { firebaseAuth } from '../config/constants'
-
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -57,14 +56,13 @@ class AuthHome extends Component {
     componentWillUnmount () {
         this.removeListener()
     }
-    
 
     render() {
         return (
             <div>
-                    <PrivateRoute authed={this.state.authed} path='/' component={App} />
-                    <PublicRoute authed={this.state.authed} exact path='/login' component={WrappedLoginForm} />
-                    {/*<PublicRoute authed={this.state.authed} path='/register' component={Register} />*/}     
+              <PrivateRoute authed={this.state.authed} path='/' component={App} />
+              <PublicRoute authed={this.state.authed} path='/login' component={WrappedLoginForm} />
+              {/*<PublicRoute authed={this.state.authed} path='/register' component={Register} />*/}
             </div>
         );
   }

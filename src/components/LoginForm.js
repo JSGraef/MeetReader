@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, Icon, Input, Button, Checkbox, Layout, Menu } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Layout, Menu, Alert } from 'antd';
 const FormItem = Form.Item;
 const {Content, Header} = Layout;
 import { login, resetPassword } from '../helpers/auth';
@@ -16,17 +16,17 @@ class LoginForm extends Component {
     resetPassword = () => {
         resetPassword(this.email.value)
             .then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.email.value}.`)))
-            .catch((error) => this.setState(setErrorMsg(`Email address not found.`)))
+            .catch((error) => this.setState(setErrorMsg(`Please provide an email address.`)))
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        
+
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 login(this.email.value, this.pw.value)
                     .catch((error) => {
-                        this.setState(setErrorMsg('Invalid username/password.'))
+                        this.setState(setErrorMsg('Invalid username / password.'))
                     })
             }
         });
@@ -54,10 +54,7 @@ class LoginForm extends Component {
 
                     {
                         this.state.loginMessage &&
-                        <div className="alert alert-danger" role="alert">
-                            <span className="sr-only">Error:</span>
-                            &nbsp;{this.state.loginMessage} <a href="#" onClick={this.resetPassword} className="alert-link">Forgot Password?</a>
-                        </div>
+                        <Alert message={this.state.loginMessage} type="warning" showIcon/>
                     }
 
                     <h2>Sign In</h2><br/>
