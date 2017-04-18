@@ -36,7 +36,7 @@ class App extends Component {
   render() {
 
     return (
-        <Layout >
+        <Layout style={{minHeight: '100vh'}}>
           <BackTop />
 
           <Header >
@@ -55,7 +55,7 @@ class App extends Component {
             
           </Header>
 
-          <Layout style={{minHeight: '100vh'}}>
+          <Layout style={{minHeight: '100%'}}>
             <Sider width={200} style={{ background: '#fff' }}>
               <Sidebar teams={this.state.teams} events={this.state.events} />
             </Sider>
