@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Layout, Menu, BackTop, Breadcrumb } from 'antd';
+import { Layout, Menu, BackTop, Breadcrumb, Button } from 'antd';
 const { Header, Sider, Content } = Layout;
 
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import Home from './Home';
 
 import MeetReader from './MeetReader/MeetReader';
 import ImportMeet from './MeetReader/ImportMeet';
 import Sidebar from './Sidebar';
 
-import WrappedLoginForm from './LoginForm';
+import { logout } from '../helpers/auth'
 
 import './App.css';
 
@@ -50,7 +50,9 @@ class App extends Component {
               <Menu.Item key="home"><Link to="/">Home</Link></Menu.Item>
               <Menu.Item key="meet"><Link to="/meet">Meet</Link></Menu.Item>
               <Menu.Item key="import"><Link to="/import">Import</Link></Menu.Item>
+              <Menu.Item key="signout"><Button type="primary" onClick={() => {logout()}} >Sign Out</Button></Menu.Item>
             </Menu>
+            
           </Header>
 
           <Layout style={{minHeight: '100vh'}}>
