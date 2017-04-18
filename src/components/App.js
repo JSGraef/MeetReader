@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, BackTop, Breadcrumb, Button } from 'antd';
+import { Layout, Menu, BackTop, Button } from 'antd';
 const { Header, Sider, Content } = Layout;
 
 import { Route, Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import Home from './Home';
 import MeetReader from './MeetReader/MeetReader';
 import ImportMeet from './MeetReader/ImportMeet';
 import Sidebar from './Sidebar';
+import Breadcrumbs from './Breadcrumbs';
 
 import { logout } from '../helpers/auth'
 
@@ -62,17 +63,12 @@ class App extends Component {
 
             <Layout style={{ padding: '0 24px 24px', height: '100%'}}>
 
-              <Breadcrumb style={{ margin: '12px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>{this.state.location}</Breadcrumb.Item>
-              </Breadcrumb>
+              <Breadcrumbs path={this.props.location.pathname} />
 
               <Content style={{ background: '#fff', padding: 24, margin: 0}}>
-                
                 <Route exact path="/" component={Home}/>
                 <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
                 <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
-              
               </Content>
             
             </Layout>
