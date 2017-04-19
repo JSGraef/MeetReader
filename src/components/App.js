@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, BackTop, Button } from 'antd';
+import { Layout, Menu, BackTop, Button, Col, Row } from 'antd';
 const { Header, Sider, Content } = Layout;
 
 import { Route, Link } from 'react-router-dom';
@@ -41,19 +41,28 @@ class App extends Component {
           <BackTop />
 
           <Header >
-            <div className="logo" />
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              defaultSelectedKeys={['2']}
-              style={{ lineHeight: '64px'}}
-            >
-              <Menu.Item key="home"><Link to="/">Home</Link></Menu.Item>
-              <Menu.Item key="meet"><Link to="/meet">Meet</Link></Menu.Item>
-              <Menu.Item key="import"><Link to="/import">Import</Link></Menu.Item>
-              <Menu.Item key="signout"><Button type="primary" onClick={() => {logout()}} >Sign Out</Button></Menu.Item>
-            </Menu>
             
+            <div className="logo" />
+            <Row type="flex" justify="space-between">
+            
+              <Menu
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={['home']}
+                style={{ lineHeight: '64px'}}
+              >
+                <Menu.Item key="home"><Link to="/">Home</Link></Menu.Item>
+                <Menu.Item key="meet"><Link to="/meet">Meet</Link></Menu.Item>
+                <Menu.Item key="import"><Link to="/import">Import</Link></Menu.Item>
+              </Menu>
+
+            <Row type="flex" justify="end">
+              <Menu theme="dark" mode="horizontal" style={{ lineHeight: '64px'}} >
+                <Menu.Item key="signout"><Button type="primary" onClick={() => {logout()}} >Sign Out</Button></Menu.Item>
+              </Menu>
+            </Row>
+            
+            </Row>
           </Header>
 
           <Layout style={{minHeight: '100%'}}>
