@@ -5,12 +5,14 @@ import WrappedLoginForm from './LoginForm';
 import { firebaseAuth } from '../config/constants'
 import { Route, Redirect } from 'react-router-dom';
 
+let loggedInInUser;
+
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
     <Route
       {...rest}
       render={(props) => authed === true
-        ? <Component {...props} />
+        ? <Component user={loggedInInUser} {...props} />
         : <Redirect to='/login' />}
     />
   )
@@ -40,6 +42,7 @@ class AuthHome extends Component {
   componentDidMount () {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
         if (user) {
+            loggedInInUser = user;
             this.setState({
             authed: true,
             loading: false,

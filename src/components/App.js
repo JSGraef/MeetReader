@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, BackTop, Button, Col, Row } from 'antd';
+import { Layout, Menu, BackTop, Button, Row, Dropdown } from 'antd';
 const { Header, Sider, Content } = Layout;
 
 import { Route, Link } from 'react-router-dom';
@@ -36,6 +36,14 @@ class App extends Component {
 
   render() {
 
+    const menu = (
+      <Menu mode="vertical" >
+        <Menu.Item key="username">{this.props.user.email}</Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="signout"><Button type="primary" onClick={() => {logout()}} >Sign Out</Button></Menu.Item>
+      </Menu>
+  );
+
     return (
         <Layout style={{minHeight: '100vh'}}>
           <BackTop />
@@ -57,16 +65,16 @@ class App extends Component {
               </Menu>
 
             <Row type="flex" justify="end">
-              <Menu theme="dark" mode="horizontal" style={{ lineHeight: '64px'}} >
-                <Menu.Item key="signout"><Button type="primary" onClick={() => {logout()}} >Sign Out</Button></Menu.Item>
-              </Menu>
+              <Dropdown.Button type="primary" overlay={menu} trigger={['click']}>
+                <Link to="/account">My Account</Link>
+              </Dropdown.Button>
             </Row>
             
             </Row>
           </Header>
 
           <Layout style={{minHeight: '100%'}}>
-            <Sider width={200} style={{ background: '#fff' }}>
+            <Sider width={250} style={{ background: '#fff' }}>
               <Sidebar teams={this.state.teams} events={this.state.events} />
             </Sider>
 
