@@ -9,6 +9,7 @@ import MeetReader from './MeetReader/MeetReader';
 import ImportMeet from './MeetReader/ImportMeet';
 import Sidebar from './Sidebar';
 import Breadcrumbs from './Breadcrumbs';
+import Account from './Account';
 
 import { logout } from '../helpers/auth'
 
@@ -16,8 +17,8 @@ import './App.css';
 
 class App extends Component {
 
-  constructor() {
-        super();
+  constructor(props) {
+        super(props);
 
         this.state = {
             teams: [],
@@ -35,14 +36,13 @@ class App extends Component {
   }
 
   render() {
-
     const menu = (
       <Menu mode="vertical" >
         <Menu.Item key="username">{this.props.user.email}</Menu.Item>
         <Menu.Divider />
         <Menu.Item key="signout"><Button type="primary" onClick={() => {logout()}} >Sign Out</Button></Menu.Item>
       </Menu>
-  );
+    );
 
     return (
         <Layout style={{minHeight: '100vh'}}>
@@ -85,6 +85,7 @@ class App extends Component {
               <Content style={{ background: '#fff', padding: 24, margin: 0}}>
                 <Route exact path="/" component={Home}/>
                 <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
+                <Route path="/account" render={ (props) => <Account user={this.props.user} {...props} />}/>
                 <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
               </Content>
             
