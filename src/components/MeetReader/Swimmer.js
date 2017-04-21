@@ -1,5 +1,4 @@
 import React from 'react';
-import Swim from './Swim';
 import U from './utils';
 import {Link} from 'react-router-dom';
 import {Table} from 'antd';
@@ -67,7 +66,7 @@ const Swimmer = (props) => {
     return (
         <div className="swimmer">
             <div className="swimmer-header">
-                <h4>{swim.swimmerName}</h4>
+                <h4>{swim.swimmerName} - {swim.swimmerAge}</h4>
             </div>
 
             <Table

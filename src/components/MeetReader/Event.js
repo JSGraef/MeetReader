@@ -1,7 +1,5 @@
 import React from 'react';
 import U from './utils';
-import EventSwim from './EventSwim';
-import EventSwimRelay from './EventSwimRelay';
 import {Table} from 'antd';
 import {Link} from 'react-router-dom';
 import Splits from './Splits';
