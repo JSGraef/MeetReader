@@ -20,7 +20,7 @@ const SplitsRelay = (props) => {
 
     let splitIdx=0;
     return (
-        <td colSpan="6" className="swim-splitTd">
+        <span className="swim-splitTd">
             <span className='swim-split'>{prelimOrFinal}</span>
             { splits.map( split => {
                 
@@ -34,7 +34,7 @@ const SplitsRelay = (props) => {
                 splitIdx++                
                 return <span key={U.guid()} className='swim-split'>{swimmers[splitIdx-1].swimmerName} {splitTime}</span>
             })}
-        </td>
+        </span>
             
     )}
 

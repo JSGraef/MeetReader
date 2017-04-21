@@ -2,6 +2,10 @@ import React from 'react';
 import U from './utils';
 import EventSwim from './EventSwim';
 import EventSwimRelay from './EventSwimRelay';
+import {Table} from 'antd';
+import {Link} from 'react-router-dom';
+import Splits from './Splits';
+import SplitsRelay from './SplitsRelay';
 
 const Event = (props) => {
     if(props.event === undefined)
@@ -63,33 +67,124 @@ const Event = (props) => {
 
     // If we have a relay (which follows a different format)
     if(swimmersInOrder[0].swimmers !== undefined) {
+        const relaycolumns = [
+        {
+            title: 'Place',
+            dataIndex: 'finalsPlace',
+            key: 'place'
+        },
+        {
+            title: 'Team',
+            dataIndex: 'teamCode',
+            key: 'name',
+            render: (text, record) => <Link to={`/meet/team/${record.teamCode}`}>{text} {record.relTeamName}</Link>
+        },
+        {
+            title: 'Seed Time',
+            dataIndex: 'seedTime',
+            key: 'seed'
+        },
+        {
+            title: 'Prelim Time',
+            dataIndex: 'prelimTime',
+            key: 'prelim'
+        },
+        {
+            title: 'Finals Time',
+            dataIndex: 'finalsTime',
+            key: 'final'
+        },
+        {
+            title: 'Improvement',
+            dataIndex: 'improvement',
+            key: 'improvement',
+            render: (text, record) => {
+                const time = (record.finalsTime === '') ? record.prelimTime : record.finalsTime;
+                let timeDiff = U.timeDiff(record.seedTime, time);
+                let timeDiffClass = 'swim-diffNeg';
+                if(timeDiff > 0) {
+                    timeDiff = '+'+timeDiff;
+                    timeDiffClass = 'swim-diffPos';
+                }
+
+                return <span className={timeDiffClass}>{timeDiff}</span>;
+            }
+        },
+        {
+            title: 'Points Scored',
+            dataIndex: 'pointsScored',
+            key: 'points'
+        }
+    ];
+
         return (
-            <div className="mdl-cell mdl-cell--12-col swimmer">
+            <div className="swimmer">
                 <div className="swimmer-header">
                     <h4>{U.parseEventTitle(event[0])}</h4>
                 </div>
-                
-                <table className="" width="100%">
-                <thead>
-                    <tr>
-                        <th>Place</th>
-                        <th>Name</th>
-                        <th>Seed Time</th>
-                        <th>Prelim Time</th>
-                        <th>Finals Time</th>
-                        <th>Time Adjustment</th>
-                        <th>Points Scored</th>
-                    </tr>
-                </thead>
 
-                {swimmersInOrder.map( relay => {
-                    return <EventSwimRelay key={U.guid()} relay={relay} />
-                })}
-                
-                </table>
+                <Table
+                    rowKey={record => record.teamCode+record.relTeamName+record.finalsPlace}
+                    columns={relaycolumns}
+                    dataSource={swimmersInOrder}
+                    pagination={false}
+                    expandedRowRender={record => <SplitsRelay swimmers={record.swimmers} />}
+                    size="small"
+                />
             </div>
         );
     }
+
+    const columns = [
+        {
+            title: 'Place',
+            dataIndex: 'finalsPlace',
+            key: 'place'
+        },
+        {
+            title: 'Name',
+            dataIndex: 'swimmerName',
+            key: 'name',
+            render: (text, record) => <Link to={`/meet/swimmer/${record.ussNum}`}>{text}</Link>
+        },
+        {
+            title: 'Seed Time',
+            dataIndex: 'seedTime',
+            key: 'seed'
+        },
+        {
+            title: 'Prelim Time',
+            dataIndex: 'prelimTime',
+            key: 'prelim'
+        },
+        {
+            title: 'Finals Time',
+            dataIndex: 'finalsTime',
+            key: 'final',
+            render: (text) => {return text.substring(0, text.length-1)}
+        },
+        {
+            title: 'Improvement',
+            dataIndex: 'improvement',
+            key: 'improvement',
+            render: (text, record) => {
+                const time = (record.finalsTime === '') ? record.prelimTime : record.finalsTime;
+                let timeDiff = U.timeDiff(record.seedTime, time);
+                let timeDiffClass = 'swim-diffNeg';
+                if(timeDiff > 0) {
+                    timeDiff = '+'+timeDiff;
+                    timeDiffClass = 'swim-diffPos';
+                }
+
+                return <span className={timeDiffClass}>{timeDiff}</span>;
+            }
+        },
+        {
+            title: 'Points Scored',
+            dataIndex: 'pointsScored',
+            key: 'points'
+        }
+    ];
 
     return (
         <div className="swimmer">
@@ -97,38 +192,20 @@ const Event = (props) => {
                 <h4>{U.parseEventTitle(event[0])}</h4>
             </div>
             
-            <table className="eventTable" width="100%">
-            <thead>
-                <tr>
-                    <th>Place</th>
-                    <th>Name</th>
-                    <th>Team</th>
-                    <th>Seed Time</th>
-                    <th>Prelim Time</th>
-                    <th>Finals Time</th>
-                    <th>Time Adjustment</th>
-                    <th>Points Scored</th>
-                </tr>
-            </thead>
-            
-                {swimmersInOrder.map( swimmer => {
-                    let team='';
-
-                    if(props.teams !== undefined){
-                        const swimmerid = swimmer.ussNum;
-
-                        for(let t of props.teams) {
-                            if( swimmerid in t.swimmers) {
-                                team = t.teamCode;
-                                break;    
-                            }
-                        }
-                    }
-
-                    return <EventSwim key={U.guid()} swimmer={swimmer} team={team}/>
-                })}
-            
-            </table>
+            <Table
+                rowKey={record => record.ussNum}
+                columns={columns}
+                dataSource={swimmersInOrder}
+                pagination={false}
+                expandedRowRender={record => {
+                    return (
+                        record.splits.map(s => {
+                            return <Splits splits={s} key={U.guid()} />
+                    }))
+                    
+                    }}
+                size="small"
+            />
         </div>
     );
 }

@@ -26,7 +26,7 @@ const Splits = (props) => {
     let splitIdx = 0;
 
     return (
-        <td colSpan="6" className="swim-splitTd">
+        <p className="swim-splitTd">
             <span className='swim-split'>{prelimOrFinal}</span>
             { splits.map( split => {
                 
@@ -38,7 +38,7 @@ const Splits = (props) => {
                 
                 return <span key={U.guid()} className='swim-split'>{split} {splitTime}</span>
             })}
-        </td>
+        </p>
             
     )}
 
