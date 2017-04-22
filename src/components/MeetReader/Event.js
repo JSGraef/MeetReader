@@ -1,6 +1,6 @@
 import React from 'react';
 import U from './utils';
-import {Table} from 'antd';
+import {Table, Button, Icon, Row} from 'antd';
 import {Link} from 'react-router-dom';
 import Splits from './Splits';
 import SplitsRelay from './SplitsRelay';
@@ -184,8 +184,21 @@ const Event = (props) => {
         }
     ];
 
+    const eventid = parseInt(props.eventid, 10);
     return (
         <div className="swimmer">
+            <Row type="flex" justify="end">
+               <Button.Group size='small'>
+                    <Button>
+                        <Link to={`/meet/events/${eventid-1}`}><Icon type="left" />Previous Event</Link>
+                    </Button>
+                    <Button>
+                        <Link to={`/meet/events/${eventid+1}`}>Next Event<Icon type="right" /></Link>
+                    </Button>
+                </Button.Group>
+            </Row>
+
+           
             <div className="swimmer-header">
                 <h4>{U.parseEventTitle(event[0])}</h4>
             </div>

@@ -30,7 +30,7 @@ class MREvent extends Component {
         if(events.length === 0 || Object.keys(event).length === 0 || event === undefined)
             return <h4>Couldn't find that event</h4>
 
-        return <Event event={event} teams={teams} />
+        return <Event event={event} teams={teams} eventid={eventid} />
     }
 }
 
