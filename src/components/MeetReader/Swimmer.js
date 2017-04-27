@@ -17,7 +17,7 @@ const Swimmer = (props) => {
             dataIndex: 'eventNum',
             key: 'eventNum',
             render: (text, record) =>
-                <Link to={`/meet/events/${record.eventNum}`}>{`${record.eventDist} ${U.getStrokeFromCode(record.strokeCode)}`}</Link>
+                <Link to={`/meet/${props.meetid}/events/${record.eventNum}`}>{`${record.eventDist} ${U.getStrokeFromCode(record.strokeCode)}`}</Link>
         },
         {
             title: 'Seed Time',

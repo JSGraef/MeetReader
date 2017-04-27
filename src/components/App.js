@@ -5,6 +5,7 @@ const { Header, Sider, Content } = Layout;
 import { Route, Link } from 'react-router-dom';
 import Home from './Home';
 
+import MeetList from './MeetReader/MeetList';
 import MeetReader from './MeetReader/MeetReader';
 import ImportMeet from './MeetReader/ImportMeet';
 import Sidebar from './Sidebar';
@@ -84,7 +85,8 @@ class App extends Component {
 
               <Content style={{ background: '#fff', padding: 24, margin: 0}}>
                 <Route exact path="/" component={Home}/>
-                <Route path="/meet" render={ (props) => <MeetReader events={this.state.events} teams={this.state.teams} {...props} />}/>
+                <Route exact path="/meet" component={MeetList} />  
+                <Route path="/meet/:meetid" render={ (props) => <MeetReader user={this.props.user} onImportMeet={this.onImportMeet} {...props} />}/>          
                 <Route path="/account" render={ (props) => <Account user={this.props.user} {...props} />}/>
                 <Route exact path="/import" render={ (props) => <ImportMeet onImportMeet={this.onImportMeet} {...props} />}/>
               </Content>

@@ -29,7 +29,7 @@ class MRSwimmer extends Component {
         if(teams.length === 0 || Object.keys(swimmer).length === 0 || swimmer === undefined)
             return <h4>Couldn't find that swimmer</h4>
 
-        return <Swimmer key={swimmer.ussNum} swimmer={swimmer} />
+        return <Swimmer key={swimmer.ussNum} meetid={this.props.match.params.meetid} swimmer={swimmer} />
     }
 }
 

@@ -160,7 +160,7 @@ class Event extends Component {
                 title: 'Name',
                 dataIndex: 'swimmerName',
                 key: 'name',
-                render: (text, record) => <Link to={`/meet/swimmer/${record.ussNum}`}>{text}</Link>
+                render: (text, record) => <Link to={`/meet/${this.props.meetid}/swimmer/${record.ussNum}`}>{text}</Link>
             },
             {
                 title: 'Seed Time',

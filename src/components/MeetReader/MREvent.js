@@ -14,15 +14,18 @@ class MREvent extends Component {
         if(events.length === 1)
             return <h4>Still loading events...</h4>
 
-        let event = {};        
+        let event = {};   
+
+        const eventKeys = Object.keys(events);    
 
         // e is the array list of swimmers in the event
-        for(let e of events) {
-            if(e === undefined || e.length === 0)
+        for(let e of eventKeys) {
+            const ev = events[e];
+            if(ev === undefined || ev.length === 0)
                 continue;
 
-            if( e[0].eventNum === eventid) {
-                event = e;
+            if( ev[0].eventNum === eventid) {
+                event = ev;
                 break;
             } 
         }
@@ -30,7 +33,7 @@ class MREvent extends Component {
         if(events.length === 0 || Object.keys(event).length === 0 || event === undefined)
             return <h4>Couldn't find that event</h4>
 
-        return <Event event={event} teams={teams} eventid={eventid} />
+        return <Event event={event} teams={teams} meetid={this.props.match.params.meetid} eventid={eventid} />
     }
 }
 

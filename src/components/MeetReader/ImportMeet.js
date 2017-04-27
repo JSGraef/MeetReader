@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 
-import './MeetReader.css';
 import U from './utils';
 import {Redirect} from 'react-router-dom';
 
-import { Alert } from 'antd';
+// Firebase 
+import {config} from '../../config/constants';
+import Rebase  from 're-base';
+var base = Rebase.createClass(config, 'TeamCaptain');
+
+import { Alert, Upload, Icon, message, notification, Button } from 'antd';
 
 import DropzoneComponent from 'react-dropzone-component';
 import 'react-dropzone-component/styles/filepicker.css';
@@ -17,11 +21,13 @@ class ImportMeet extends Component {
         this.state = {
             message: false,
             type: '',
-            text: ''
+            text: '',
+            meet: {}
         }
 
         this.readFile = this.readFile.bind(this);
         this.parseFileContents = this.parseFileContents.bind(this);
+        this.addMeetToDB = this.addMeetToDB.bind(this);
     }
 
 
@@ -59,6 +65,83 @@ class ImportMeet extends Component {
         fr.readAsText(file);
     }
 
+    addMeetToDB() {
+        if(this.state.meet === undefined) 
+            return;
+
+        // TODO get team code/unique ID
+
+        const meetID = btoa(this.state.meet.info.meetName);
+        let bAlreadyUploaded = false;
+
+        const openNotification = (id, message) => {
+            const key = `open${Date.now()}`;
+            const btnClick = function (id) {
+                // to hide notification box
+                notification.close(key);
+                // TODO redirect to meet id --
+                // maybe set the state here of the meet ID and then use the redicrect in render
+                // router.transitionTo(`meet/${id}`);
+            };
+            const btn = (
+                <Button type="primary" size="small" onClick={btnClick(id)}>
+                    See meet results!
+                </Button>
+            );
+            notification['success']({
+                message: 'Success!',
+                description: message,
+                btn,
+                key,
+                onClose: close,
+            });
+        };
+
+        // Get all the meets to check for duplicate
+        //let list = {};
+        base.fetch('MRVAC/meets/meetlist', {
+            context: this,
+            then(data) {
+                let list = data;
+                const keys = Object.keys(list);
+                for(let meet of keys) {
+                    if(meet === meetID) {
+                        console.log("match!", meetID);
+                        bAlreadyUploaded = true;
+                        break;
+                    }
+                }
+
+                if(!bAlreadyUploaded) {
+                    // Since we don't have a duplicate, create a new entry
+                    list[meetID] = this.state.meet.info;
+
+                    // Add new meet id to the list of meets we have
+                    // So when we search the DB, we just pull the meet and info instead of everything
+                    base.post('MRVAC/meets/meetlist', {
+                        data: list,
+                        then(err) {
+                            if(!err) {
+                               // console.log("added to meet list");
+                            }
+                            else
+                                console.log(err);
+                    }});    
+
+                    const path = `MRVAC/meets/${meetID}`;
+                    // Add meet to the database
+                    base.post(path, {
+                        data: this.state.meet,
+                        then(err) {
+                            if(!err)
+                                openNotification(meetID, 'Meet was saved successfully!');
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 
     // For each line in the file, do something with the record
     // This is the heart of the app and controls everything on file read
@@ -66,6 +149,7 @@ class ImportMeet extends Component {
         let events = new Set();
         let bRelay = false;
         let teams = [];
+        let info = {};
 
         // Read file line by line and do something with it
         for(let line of lines) {
@@ -76,7 +160,7 @@ class ImportMeet extends Component {
                     U.parseA0(line); 
                     break;
                 case 'B1': { // Meet Record
-                    U.parseB1(line); 
+                    info = U.parseB1(line); 
                     break;
                 }
                 case 'B2': // Meet Host Record
@@ -96,10 +180,11 @@ class ImportMeet extends Component {
                     let swimmers = teams[teams.length -1].swimmers;
 
                     // If we don't have a record for that swimmer yet, add one with an empty swims set
-                    if(swimmers[event.ussNum] === undefined)
-                        swimmers[event.ussNum] = {swims:[]};
+                    const ussNum =  (event.ussNum !== "") ? event.ussNum : "invalid";
+                    if(swimmers[ussNum] === undefined)
+                        swimmers[ussNum] = {swims:[]};
                     
-                    swimmers[event.ussNum].swims.push(event);
+                    swimmers[ussNum].swims.push(event);
                     events.add(event.eventNum);
 
                     teams[teams.length -1].swimmers = swimmers;
@@ -116,6 +201,9 @@ class ImportMeet extends Component {
                     const swimmer = U.parseD3(line);
                     let swimmers = teams[teams.length -1].swimmers;
                     let modUssNum = swimmer.ussNum.substring(12,0);
+                    if( modUssNum === "")
+                        modUssNum = "invalid";
+
                     let currentSwims = swimmers[modUssNum].swims;
 
                     // Combine new with old
@@ -198,7 +286,13 @@ class ImportMeet extends Component {
         }
 
         const eventlist = this.getEvents(Array.from(events), teams);
+
+        // TODO No longer necessary
         this.props.onImportMeet(eventlist, teams); // Send back to app.js as a store
+
+        const meet = {info: info, events: eventlist, teams: teams};
+        this.setState({meet: meet});
+        this.addMeetToDB();
 
         this.setState({message: true, type: 'success', text: 'File was read successfully'});
     }
@@ -257,6 +351,51 @@ class ImportMeet extends Component {
 
         if(this.state.message === true && this.state.type === 'success')
             return <Redirect to="/meet" />
+
+        
+        
+        // const fileName = file.name;
+        // var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
+
+        // // First line of defense against reading files we don't want
+        // if(ext === 'sd3' || ext === 'cl2')
+        //     this.readFile(file);
+        // else
+        //     this.setState({message: true, type: 'error', text: 'File extension needs to be .CL2 or .SD3'});
+
+
+
+
+        // const props = {
+        //     name: 'file',
+        //     multiple: true,
+        //     showUploadList: true,
+        //     action: '/',
+        //     customRequest(file) {
+        //         this.onDragDrop(file);
+        //     },
+        //     beforeUpload(file) {
+        //         const ext = file.name.substr(file.name.lastIndexOf('.')+1);
+        //         if(ext === 'sd3' || ext === 'cl2') 
+        //             return true;
+
+        //         message.error(`${file.name} upload failed. Must have CL2 or SD3 file extension.`);
+        //         return false;
+        //     },
+        //     onChange(info) {
+        //         const status = info.file.status;
+        //         if (status !== 'uploading') {
+        //             console.log(info.file, info.fileList);
+        //         }
+        //         if (status === 'done') {
+        //             message.success(`${info.file.name} file uploaded successfully.`);
+        //             this.readFile(info.file.name);
+
+        //         } else if (status === 'error') {
+        //             message.error(`${info.file.name} file upload failed.`);
+        //         }
+        //     },
+        // };
         
         return (
             <div>
@@ -264,6 +403,15 @@ class ImportMeet extends Component {
                 <h3>Import any .sd3 or .cl2 meet file to see a list of swimmers and their times, splits, improvements, and points scored.</h3>
                 <br />
                 <DropzoneComponent config={componentConfig} eventHandlers={eventHandlers} djsConfig={djsConfig} />
+                <br /> <br/>
+                
+                {/*<Upload.Dragger {...props}>
+                    <p className="ant-upload-drag-icon">
+                        <Icon type="inbox" />
+                    </p>
+                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                    <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+                </Upload.Dragger>*/}
 
                 { this.state.message ? <Alert message={this.state.text} type={this.state.type} /> : ''}
             </div>

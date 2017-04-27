@@ -12,7 +12,7 @@ const Team = (props) => {
         <h2>{props.team.teamName}</h2>
        
             {swimmerKeys.map(key =>
-                { return <Swimmer key={key} swimmer={props.team.swimmers[key]} /> }
+                { return <Swimmer key={key} meetid={props.meetid} swimmer={props.team.swimmers[key]} /> }
             )}
         
     </div>

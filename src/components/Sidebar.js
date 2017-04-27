@@ -12,7 +12,7 @@ const TeamsMenu = (props) => {
     return (
         <Menu mode="inline" style={{ height: '100%' }}>
             <SubMenu key="teams" title={<span><Icon type="usergroup-add" />Teams</span>}>
-                { props.teams.map( team => { return <Menu.Item key={team.teamCode}><Link to={`/meet/team/${team.teamCode}`}>{team.teamCode}</Link></Menu.Item> } ) }
+                { props.teams.map( team => { return <Menu.Item key={team.teamCode}><Link to={`/meet/${props.meetid}/team/${team.teamCode}`}>{team.teamCode}</Link></Menu.Item> } ) }
             </SubMenu>
         </Menu>
     );
@@ -26,10 +26,11 @@ const EventsMenu = (props) => {
         <Menu mode="inline" style={{ height: '100%' }}>
             <SubMenu key="events" title={<span><Icon type="solution" />Events</span>}>
                 <Menu.Item key="showall"><Link to={`/meet/events`}>Show All</Link></Menu.Item>
-                    { props.events.map( event => { 
+                    { Object.keys(props.events).map( e => { 
+                        const event = props.events[e];
                         if(event.length === 0)
                             return null;
-                        return <Menu.Item key={event[0].eventNum}><Link to={`/meet/events/${event[0].eventNum}`}>{U.parseEventTitle(event[0])}</Link></Menu.Item> 
+                        return <Menu.Item key={event[0].eventNum}><Link to={`/meet/${props.meetid}/events/${event[0].eventNum}`}>{U.parseEventTitle(event[0])}</Link></Menu.Item> 
                     })}
             </SubMenu>
         </Menu>
@@ -44,8 +45,8 @@ const Sidebar = (props) => {
 
     return (             
         <div>
-            <Route path="/meet" render={ (p) => <TeamsMenu teams={props.teams} {...p} /> } />
-            <Route path="/meet" render={ (p) => <EventsMenu events={props.events} {...p} /> } />
+            <Route path="/meet/:meetid" render={ (p) => <TeamsMenu teams={props.teams} meetid={p.match.params.meetid} {...p} /> } />
+            <Route path="/meet/:meetid" render={ (p) => <EventsMenu events={props.events} meetid={p.match.params.meetid} {...p} /> } />
         </div>
     );
 }

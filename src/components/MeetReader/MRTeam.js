@@ -20,7 +20,7 @@ class MRTeam extends Component {
         if(teams.length === 0 || Object.keys(team).length === 0 || team === undefined)
             return <h4>Couldn't find that team</h4>
 
-        return <Team key={team.teamCode} team={team} />
+        return <Team key={team.teamCode} meetid={this.props.match.params.meetid} team={team} />
     }
 }
 

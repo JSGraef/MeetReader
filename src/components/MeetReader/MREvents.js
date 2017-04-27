@@ -8,11 +8,11 @@ const MREvents = (props) => {
 
     return (
         <div>
-            { props.events.map( e => {
-                if(e[0] === undefined || e === [])
+            { Object.keys(props.events).map( e => {
+                if(props.events[e] === undefined || props.events[e] === [])
                     return null;
                 
-                return <Event key={e[0].eventNum} event={e} {...props} />
+                return <Event key={e} event={props.events[e]} {...props} />
             }) }
         </div>
     );
