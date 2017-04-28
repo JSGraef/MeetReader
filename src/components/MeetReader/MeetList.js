@@ -74,7 +74,7 @@ class MeetList extends Component {
         meetkeys.map( key => {
             const meet = this.state.meets[key];
             if(meet === undefined) 
-                return;
+                return null;
 
             const meetData = {
                 key: key,
@@ -83,7 +83,7 @@ class MeetList extends Component {
             }
 
             data.push(meetData);
-            return;
+            return null;
         } )
     }
 

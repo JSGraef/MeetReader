@@ -8,7 +8,7 @@ import {config} from '../../config/constants';
 import Rebase  from 're-base';
 var base = Rebase.createClass(config, 'TeamCaptain');
 
-import { Alert, Upload, Icon, message, notification, Button } from 'antd';
+import { Alert, notification, Button } from 'antd';
 
 import DropzoneComponent from 'react-dropzone-component';
 import 'react-dropzone-component/styles/filepicker.css';
