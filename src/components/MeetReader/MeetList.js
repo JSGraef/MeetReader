@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
 import './MeetReader.css';
+import moment from 'moment';
 
 import {Button, Table, Popconfirm, message} from 'antd';
 
@@ -56,6 +57,15 @@ class MeetList extends Component {
             title: 'Date',
             dataIndex: 'date',
             key: 'date',
+        }, 
+        {
+            title: 'Tags',
+            dataIndex: 'tags',
+            key: 'tags',
+        }, {
+            title: 'Address',
+            dataIndex: 'address',
+            key: 'address',
         }, {
             title: 'Action',
             key: 'action',
@@ -78,8 +88,10 @@ class MeetList extends Component {
 
             const meetData = {
                 key: key,
-                date: meet.meetStart,
-                name: meet.meetName
+                date: moment(meet.meetStart, 'MMDDYYYY').format('DD-MMM-YYYY'),
+                name: meet.meetName,
+                tags: meet.tags,
+                address: `${meet.meetAddressL1} ${meet.meetCity}, ${meet.meetState} ${meet.postalCode}`
             }
 
             data.push(meetData);

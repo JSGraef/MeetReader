@@ -8,7 +8,9 @@ import {config} from '../../config/constants';
 import Rebase  from 're-base';
 var base = Rebase.createClass(config, 'TeamCaptain');
 
-import { Alert, notification, Button } from 'antd';
+import { Alert, notification, Button, Steps, Form, FormItem, Input, RangePicker } from 'antd';
+
+import WrappedImportNotesForm from './Forms/ImportNotesForm';
 
 import DropzoneComponent from 'react-dropzone-component';
 import 'react-dropzone-component/styles/filepicker.css';
@@ -22,12 +24,15 @@ class ImportMeet extends Component {
             message: false,
             type: '',
             text: '',
-            meet: {}
+            meet: {},
+            notes: {},
+            currentStep: 0
         }
 
         this.readFile = this.readFile.bind(this);
         this.parseFileContents = this.parseFileContents.bind(this);
         this.addMeetToDB = this.addMeetToDB.bind(this);
+        this.saveNotes = this.saveNotes.bind(this);
     }
 
 
@@ -134,14 +139,13 @@ class ImportMeet extends Component {
                         data: this.state.meet,
                         then(err) {
                             if(!err)
-                                openNotification(meetID, 'Meet was saved successfully!');
+                                openNotification(meetID, 'Meet was saved successfully!'); // why does this happen so LATE???
                         }
                     });
                 }
             }
         });
     }
-
 
     // For each line in the file, do something with the record
     // This is the heart of the app and controls everything on file read
@@ -161,6 +165,7 @@ class ImportMeet extends Component {
                     break;
                 case 'B1': { // Meet Record
                     info = U.parseB1(line); 
+                    info['meetNameOriginal'] = info.meetName;
                     break;
                 }
                 case 'B2': // Meet Host Record
@@ -290,11 +295,13 @@ class ImportMeet extends Component {
         // TODO No longer necessary
         this.props.onImportMeet(eventlist, teams); // Send back to app.js as a store
 
+        info['tags'] = '';
+        info['notes'] = ''; 
+
         const meet = {info: info, events: eventlist, teams: teams};
         this.setState({meet: meet});
-        this.addMeetToDB();
 
-        this.setState({message: true, type: 'success', text: 'File was read successfully'});
+        //this.setState({message: true, type: 'success', text: 'File was read successfully'});
     }
 
     // Puts swimmers in every event they swam
@@ -340,7 +347,17 @@ class ImportMeet extends Component {
             return events;
     }
 
-    render() {
+    nextStep() {
+        const current = this.state.currentStep + 1;
+        this.setState({currentStep: current});
+    }
+
+    prevStep() {
+        const current = this.state.currentStep - 1;
+        this.setState({currentStep: current});
+    }
+
+    renderMeetImport() {
         var componentConfig = {
           iconFiletypes: ['.cl2', '.sd3'],
           showFiletypeIcon: true,
@@ -348,54 +365,6 @@ class ImportMeet extends Component {
         };
         var djsConfig = { autoProcessQueue: false }
         var eventHandlers = { addedfile: (file) => this.onDragDrop(file)}
-
-        if(this.state.message === true && this.state.type === 'success')
-            return <Redirect to="/meet" />
-
-        
-        
-        // const fileName = file.name;
-        // var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
-
-        // // First line of defense against reading files we don't want
-        // if(ext === 'sd3' || ext === 'cl2')
-        //     this.readFile(file);
-        // else
-        //     this.setState({message: true, type: 'error', text: 'File extension needs to be .CL2 or .SD3'});
-
-
-
-
-        // const props = {
-        //     name: 'file',
-        //     multiple: true,
-        //     showUploadList: true,
-        //     action: '/',
-        //     customRequest(file) {
-        //         this.onDragDrop(file);
-        //     },
-        //     beforeUpload(file) {
-        //         const ext = file.name.substr(file.name.lastIndexOf('.')+1);
-        //         if(ext === 'sd3' || ext === 'cl2') 
-        //             return true;
-
-        //         message.error(`${file.name} upload failed. Must have CL2 or SD3 file extension.`);
-        //         return false;
-        //     },
-        //     onChange(info) {
-        //         const status = info.file.status;
-        //         if (status !== 'uploading') {
-        //             console.log(info.file, info.fileList);
-        //         }
-        //         if (status === 'done') {
-        //             message.success(`${info.file.name} file uploaded successfully.`);
-        //             this.readFile(info.file.name);
-
-        //         } else if (status === 'error') {
-        //             message.error(`${info.file.name} file upload failed.`);
-        //         }
-        //     },
-        // };
         
         return (
             <div>
@@ -403,20 +372,132 @@ class ImportMeet extends Component {
                 <h3>Import any .sd3 or .cl2 meet file to see a list of swimmers and their times, splits, improvements, and points scored.</h3>
                 <br />
                 <DropzoneComponent config={componentConfig} eventHandlers={eventHandlers} djsConfig={djsConfig} />
-                <br /> <br/>
-                
-                {/*<Upload.Dragger {...props}>
-                    <p className="ant-upload-drag-icon">
-                        <Icon type="inbox" />
-                    </p>
-                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                    <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
-                </Upload.Dragger>*/}
+            </div>
+    )}
 
-                { this.state.message ? <Alert message={this.state.text} type={this.state.type} /> : ''}
+    renderReviewMeetInfo() {
+        return (
+            <div>
+                <h1>Review Meet</h1>
+                <h2>{this.state.meet.info.meetName}</h2>
+                <p>Date: {this.state.meet.info.meetStart} - {this.state.meet.info.meetEnd}</p>
+                <p>Notes: {this.state.meet.info.notes}</p>
+                <p>Tags: {this.state.meet.info.tags}</p>
+                <p>Events: {this.state.meet.events.length}</p>
+            </div>
+        )
+    }
+
+    // Save the info/notes from ImportNotesForm
+    saveNotes(notes) {
+        let meet = this.state.meet;
+        let info = meet.info;
+        info.meetName = notes.meetName || info.meetName;
+        info.tags = notes.meetTags;
+        info.notes = notes.meetNotes;
+        info.meetStart = notes.meetStart;
+        info.meetEnd = notes.meetEnd;
+
+        meet.info = info;
+        this.setState({meet});
+    }
+
+    render() {
+        // if(this.state.message === true && this.state.type === 'success')
+        //     return <Redirect to="/meet" />
+        
+        return (
+            <div>
+                <Steps current={this.state.currentStep}>
+                    <Steps.Step title="Import" description="Import a meet results." />
+                    <Steps.Step title="Meet Details" description="Enter in meet details." />
+                    <Steps.Step title="Review / Finish" description="Always double-check!" />
+                </Steps>
+
+                {
+                    this.state.currentStep === 0 &&
+                    <div>
+                        {this.renderMeetImport()}<br />
+                        <Button type="primary" onClick={() => this.nextStep()}>Next</Button>
+                    </div>
+                }
+                {
+                    this.state.currentStep === 1 &&
+                    <div>
+                        <WrappedImportNotesForm saveNotes={this.saveNotes} meetinfo={this.state.meet.info} /><br />
+                        <Button type="primary" onClick={() => this.nextStep()}>Next</Button> <Button onClick={() => this.prevStep()}>Previous</Button>
+                    </div>
+                }
+                {
+                    this.state.currentStep === 2 &&
+                    <div>
+                        {this.renderReviewMeetInfo()}<br />
+                        <Button type="primary" onClick={()=>this.addMeetToDB()}>Save Meet!</Button> <Button onClick={() => this.prevStep()}>Previous</Button>
+                    </div>
+                }
+
             </div>
         );
     }
 }
 
 export default ImportMeet;
+
+
+
+// TODO antd upload stuff
+// Need to figure out how to not use action param and just read the file
+
+// const fileName = file.name;
+// var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
+
+// // First line of defense against reading files we don't want
+// if(ext === 'sd3' || ext === 'cl2')
+//     this.readFile(file);
+// else
+//     this.setState({message: true, type: 'error', text: 'File extension needs to be .CL2 or .SD3'});
+
+
+
+
+// const props = {
+//     name: 'file',
+//     multiple: true,
+//     showUploadList: true,
+//     action: '/',
+//     customRequest(file) {
+//         this.onDragDrop(file);
+//     },
+//     beforeUpload(file) {
+//         const ext = file.name.substr(file.name.lastIndexOf('.')+1);
+//         if(ext === 'sd3' || ext === 'cl2') 
+//             return true;
+
+//         message.error(`${file.name} upload failed. Must have CL2 or SD3 file extension.`);
+//         return false;
+//     },
+//     onChange(info) {
+//         const status = info.file.status;
+//         if (status !== 'uploading') {
+//             console.log(info.file, info.fileList);
+//         }
+//         if (status === 'done') {
+//             message.success(`${info.file.name} file uploaded successfully.`);
+//             this.readFile(info.file.name);
+
+//         } else if (status === 'error') {
+//             message.error(`${info.file.name} file upload failed.`);
+//         }
+//     },
+// };
+
+// <Upload.Dragger {...props}>
+//     <p className="ant-upload-drag-icon">
+//         <Icon type="inbox" />
+//     </p>
+//     <p className="ant-upload-text">Click or drag file to this area to upload</p>
+//     <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+// </Upload.Dragger>
+
+
+                
