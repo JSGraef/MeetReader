@@ -301,6 +301,7 @@ class ImportMeet extends Component {
         const meet = {info: info, events: eventlist, teams: teams};
         this.setState({meet: meet});
 
+        this.nextStep();
         //this.setState({message: true, type: 'success', text: 'File was read successfully'});
     }
 
@@ -417,22 +418,21 @@ class ImportMeet extends Component {
                 {
                     this.state.currentStep === 0 &&
                     <div>
-                        {this.renderMeetImport()}<br />
-                        <Button type="primary" onClick={() => this.nextStep()}>Next</Button>
+                        {this.renderMeetImport()}
                     </div>
                 }
                 {
                     this.state.currentStep === 1 &&
                     <div>
                         <WrappedImportNotesForm saveNotes={this.saveNotes} meetinfo={this.state.meet.info} /><br />
-                        <Button type="primary" onClick={() => this.nextStep()}>Next</Button> <Button onClick={() => this.prevStep()}>Previous</Button>
+                        <Button type="primary" onClick={() => this.nextStep()}>Review</Button> <Button onClick={() => this.prevStep()}>Import Different Meet</Button>
                     </div>
                 }
                 {
                     this.state.currentStep === 2 &&
                     <div>
                         {this.renderReviewMeetInfo()}<br />
-                        <Button type="primary" onClick={()=>this.addMeetToDB()}>Save Meet!</Button> <Button onClick={() => this.prevStep()}>Previous</Button>
+                        <Button type="primary" onClick={()=>this.addMeetToDB()}>Save Meet!</Button> <Button onClick={() => this.prevStep()}>Fix Meet Info</Button>
                     </div>
                 }
 
