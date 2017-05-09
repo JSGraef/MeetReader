@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
 import U from './utils';
-import {Redirect} from 'react-router-dom';
 
 // Firebase 
 import {config} from '../../config/constants';
 import Rebase  from 're-base';
 var base = Rebase.createClass(config, 'TeamCaptain');
 
-import { Alert, notification, Button, Steps, Form, FormItem, Input, RangePicker } from 'antd';
+import { notification, Button, Steps } from 'antd';
 
 import WrappedImportNotesForm from './Forms/ImportNotesForm';
 
