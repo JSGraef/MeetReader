@@ -25,7 +25,7 @@ const EventsMenu = (props) => {
     return (
         <Menu mode="inline" style={{ height: '100%' }}>
             <SubMenu key="events" title={<span><Icon type="solution" />Events</span>}>
-                <Menu.Item key="showall"><Link to={`/meet/events`}>Show All</Link></Menu.Item>
+                <Menu.Item key="showall"><Link to={`/meet/${props.meetid}/events`}>Show All</Link></Menu.Item>
                     { Object.keys(props.events).map( e => { 
                         const event = props.events[e];
                         if(event.length === 0)
