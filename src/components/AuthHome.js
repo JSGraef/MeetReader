@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import App from './App';
-import WrappedLoginForm from './LoginForm';
+import Login from './Auth/Login';
 
 import { firebaseAuth } from '../config/constants'
 import { Route, Redirect } from 'react-router-dom';
@@ -13,7 +13,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
       {...rest}
       render={(props) => authed === true
         ? <Component user={loggedInInUser} {...props} />
-        : <Redirect to='/login' />}
+        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
     />
   )
 }
@@ -30,9 +30,9 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 }
 
 class AuthHome extends Component {
-    state = {
+  state = {
     authed: false,
-    loading: true,
+    loading: true
   }
 
   authenticate() {
@@ -44,27 +44,33 @@ class AuthHome extends Component {
         if (user) {
             loggedInInUser = user;
             this.setState({
-            authed: true,
-            loading: false,
+              authed: true,
+              loading: false
             })
         } else {
             this.setState({
-            authed: false,
-            loading: false
+              authed: false,
+              loading: false
             })
         }
-        })
+      })
     }
     
     componentWillUnmount () {
         this.removeListener()
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+      return !nextState.loading;
+    }
+
     render() {
+        if(this.state.loading)
+          return <div></div>
         return (
             <div>
               <PrivateRoute authed={this.state.authed} path='/' component={App} />
-              <PublicRoute authed={this.state.authed} path='/login' component={WrappedLoginForm} />
+              <PublicRoute authed={this.state.authed} path='/login' component={Login} />
               {/*<PublicRoute authed={this.state.authed} path='/register' component={Register} />*/}
             </div>
         );

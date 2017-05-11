@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Form, Icon, Input, Button, Checkbox, Layout, Menu, Alert } from 'antd';
 const FormItem = Form.Item;
 const {Content, Header} = Layout;
-import { login, resetPassword } from '../helpers/auth';
+import { login, resetPassword } from '../../helpers/auth';
 
 function setErrorMsg(error) {
   return {
@@ -11,7 +11,14 @@ function setErrorMsg(error) {
 }
 
 class LoginForm extends Component {
-    state = { loginMessage: null }
+
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            loginMessage: null 
+        }
+  }
 
     resetPassword = () => {
         resetPassword(this.email.value)
