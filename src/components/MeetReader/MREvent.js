@@ -16,24 +16,39 @@ class MREvent extends Component {
 
         let event = {};   
 
-        const eventKeys = Object.keys(events);    
+        const eventKeys = Object.keys(events); 
+
+        let nextEventNum, prevEventNum;   
+        let bFound = false;
 
         // e is the array list of swimmers in the event
         for(let e of eventKeys) {
+            // Using this method to get the true next instead of incrementing
+            // since some events can have letters and such included.
+            if(bFound) {
+                nextEventNum = e;
+                break;
+            }
+
             const ev = events[e];
             if(ev === undefined || ev.length === 0)
                 continue;
-
+            
             if( ev[0].eventNum === eventid) {
                 event = ev;
-                break;
+                bFound = true;
+                // Continue since we need to get next event via bFound = true, yet want to skip the prevEventNum = e
+                continue;
             } 
+
+            // Not found, so before going to next, make this the previous
+            prevEventNum = e;
         }
 
         if(events.length === 0 || Object.keys(event).length === 0 || event === undefined)
             return <h4>Couldn't find that event</h4>
 
-        return <Event event={event} teams={teams} meetid={this.props.match.params.meetid} eventid={eventid} />
+        return <Event event={event} teams={teams} meetid={this.props.match.params.meetid} showNextPrev nextEvent={nextEventNum} prevEvent={prevEventNum} eventid={eventid} />
     }
 }
 

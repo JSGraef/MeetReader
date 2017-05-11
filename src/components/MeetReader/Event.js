@@ -72,9 +72,28 @@ class Event extends Component {
             return diff;
         });
 
+        
+        const nextPrevButtons = (
+            <Row type="flex" justify="end">
+                <Button.Group size='small'>
+                    { this.props.prevEvent !== undefined &&
+                        <Button>
+                            <Link to={`/meet/events/${this.props.meetid}/${this.props.prevEvent}`}><Icon type="left" />Previous Event</Link>
+                        </Button>
+                    }
+                    {
+                        this.props.nextEvent !== undefined &&
+                        <Button>
+                            <Link to={`/meet/events/${this.props.meetid}/${this.props.nextEvent}`}>Next Event<Icon type="right" /></Link>
+                        </Button>
+                    }
+                    </Button.Group>
+                </Row> 
+                );
+
         // TODO put into state
         // Holds all the row keys for the table so we can expand them all
-        let allRowKeys = [];
+        //let allRowKeys = [];
 
         // If we have a relay (which follows a different format)
         if(swimmersInOrder[0].swimmers !== undefined) {
@@ -130,6 +149,7 @@ class Event extends Component {
 
             return (
                 <div className="swimmer">
+                    { this.props.showNextPrev && nextPrevButtons }
                     <div className="swimmer-header">
                         <h4>{U.parseEventTitle(event[0])}</h4>
                     </div>
@@ -137,7 +157,7 @@ class Event extends Component {
                     <Table
                         rowKey={record => { 
                             let key = record.teamCode + record.relTeamName + record.finalsPlace;
-                            allRowKeys.push(key);
+                            //allRowKeys.push(key);
                             return key;
                         }}
                         columns={relaycolumns}
@@ -207,21 +227,10 @@ class Event extends Component {
         // to add expanded rows:
         //expandedRowKeys={this.state.expandedRowKeys}
 
-
-        const eventid = parseInt(this.props.eventid, 10);
         return (
             <div className="swimmer">
-                <Row type="flex" justify="end">
-                <Button.Group size='small'>
-                        <Button>
-                            <Link to={`/meet/events/${eventid-1}`}><Icon type="left" />Previous Event</Link>
-                        </Button>
-                        <Button>
-                            <Link to={`/meet/events/${eventid+1}`}>Next Event<Icon type="right" /></Link>
-                        </Button>
-                    </Button.Group>
-                </Row>
-
+                
+                { this.props.showNextPrev && nextPrevButtons }
             
                 <div className="swimmer-header">
                     <h4>{U.parseEventTitle(event[0])}</h4>
@@ -240,7 +249,7 @@ class Event extends Component {
                     rowKey={record => 
                         {
                             let key = record.ussNum;
-                            allRowKeys.push(key);
+                            //allRowKeys.push(key);
                             return key;
                         }}
                     columns={columns}

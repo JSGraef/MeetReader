@@ -6,9 +6,11 @@ const MREvents = (props) => {
     if(props.events === undefined)
         return <h4>Couldn't find event</h4>
 
+    const eventKeys = Object.keys(props.events);
     return (
+        
         <div>
-            { Object.keys(props.events).map( e => {
+            { eventKeys.map( e => {
                 if(props.events[e] === undefined || props.events[e] === [])
                     return null;
                 
