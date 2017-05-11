@@ -319,19 +319,21 @@ class ImportMeet extends Component {
 
                     // Try relays first since it's short and we can skip the rest if not needed
                     for( let r of team.relays ) {
-                    if(r.eventNum === eventNum) {
-                        events[eventNum].push(r);
-                        bContinue = true;
-                        break;
-                    }
+                        if(r.eventNum === eventNum) {
+                            events[eventNum].push(r);
+                            bContinue = true; // Found it, so don't look through anything else
+                            break;
+                        }
                     }
 
                     if(bContinue) continue;
 
+                    // Check all swimmers of the team
                     for(let s in team.swimmers) {
                         if( team.swimmers.hasOwnProperty(s)){
                             let swimmer = team.swimmers[s];
 
+                            // Check to see if the swimmer swam that event
                             for(let swim of swimmer.swims) {
                                 if(swim.eventNum === eventNum) 
                                     events[eventNum].push(swim);
