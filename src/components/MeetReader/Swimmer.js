@@ -75,6 +75,8 @@ const Swimmer = (props) => {
                 dataSource={props.swimmer.swims}
                 pagination={false}
                 expandedRowRender={record => {
+                    if(record.splits === undefined)
+                        return <span className='swim-split'>No Splits Recorded</span>;
                     return (
                         record.splits.map(s => {
                             return <Splits splits={s} key={U.guid()} />
