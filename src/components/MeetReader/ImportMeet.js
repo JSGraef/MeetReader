@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 
 import U from './utils';
 
-// Firebase 
-import {config} from '../../config/constants';
-import Rebase  from 're-base';
-var base = Rebase.createClass(config, 'TeamCaptain');
-
 import { notification, Button, Steps } from 'antd';
 
 import WrappedImportNotesForm from './Forms/ImportNotesForm';
@@ -14,6 +9,13 @@ import WrappedImportNotesForm from './Forms/ImportNotesForm';
 import DropzoneComponent from 'react-dropzone-component';
 import 'react-dropzone-component/styles/filepicker.css';
 import 'dropzone/dist/min/dropzone.min.css';
+
+// Firebase 
+import {db} from '../../config/constants';
+import Rebase  from 're-base';
+var base = Rebase.createClass(db, 'TeamCaptain');
+
+
 
 class ImportMeet extends Component {
     constructor() {
@@ -97,7 +99,7 @@ class ImportMeet extends Component {
                 description: message,
                 btn,
                 key,
-                onClose: close,
+                //onClose: close,
             });
         };
 

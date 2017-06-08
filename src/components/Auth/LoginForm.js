@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { Form, Icon, Input, Button, Checkbox, Layout, Menu, Alert } from 'antd';
-const FormItem = Form.Item;
-const {Content, Header} = Layout;
+import { Form, Icon, Input, Button, Checkbox, Alert } from 'antd';
 import { login, resetPassword } from '../../helpers/auth';
+import {Link} from 'react-router-dom';
+const FormItem = Form.Item;
 
 function setErrorMsg(error) {
   return {
@@ -44,21 +44,7 @@ class LoginForm extends Component {
         const { getFieldDecorator } = this.props.form;
 
         return (
-            <Layout>
-
-                <Header >
-                    <div className="logo" />
-                    <Menu
-                    theme="dark"
-                    mode="horizontal"
-                    defaultSelectedKeys={['2']}
-                    style={{ lineHeight: '64px'}}
-                    >
-                    </Menu>
-                </Header>
-
-                <Content style={{ background: '#fff', padding: 24, margin: '24px auto'}}>
-
+            <div>
                     {
                         this.state.loginMessage &&
                         <Alert message={this.state.loginMessage} type="warning" showIcon/>
@@ -91,11 +77,10 @@ class LoginForm extends Component {
                             <Button type="primary" htmlType="submit" className="login-form-button">
                                 Log in
                             </Button>
-                            Or <a href="">register now!</a>
+                            Or <Link to="/register">register now!</Link>
                         </FormItem>
                     </Form>
-                </Content>
-        </Layout>
+                </div>
         );
     }
 }

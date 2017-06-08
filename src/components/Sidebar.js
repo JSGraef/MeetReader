@@ -2,8 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import U from './MeetReader/utils';
 import {Menu, Icon} from 'antd';
-const {SubMenu} = Menu;
 import {Route} from 'react-router-dom';
+const {SubMenu} = Menu;
 
 const TeamsMenu = (props) => {
     if(props.teams === undefined)

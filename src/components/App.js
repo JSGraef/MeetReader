@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Layout, Menu, BackTop, Button, Row, Dropdown } from 'antd';
-const { Header, Sider, Content } = Layout;
 
 import { Route, Link } from 'react-router-dom';
 import Home from './Home';
@@ -16,7 +15,9 @@ import { logout } from '../helpers/auth'
 
 import './App.css';
 
-class App extends Component {
+const { Header, Sider, Content } = Layout;
+
+class App extends Component {  
 
   constructor(props) {
         super(props);

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { Form, Input, DatePicker } from 'antd';
+import moment from 'moment';
 const FormItem = Form.Item;
 const RangePicker = DatePicker.RangePicker;
-import moment from 'moment';
+
 
 class ImportNotesForm extends Component {
 

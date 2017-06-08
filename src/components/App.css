@@ -24,3 +24,8 @@ html, body, .app {
 .login-form-button {
   width: 100%;
 }
+
+.register {
+  max-width: 900px;
+  margin: 0 auto;
+}

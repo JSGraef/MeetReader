@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import App from './App';
 import Login from './Auth/Login';
+import Register from './Auth/Register';
 
 import { firebaseAuth } from '../config/constants'
 import { Route, Redirect } from 'react-router-dom';
@@ -8,6 +9,7 @@ import { Route, Redirect } from 'react-router-dom';
 let loggedInInUser;
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
+  console.log("private")
   return (
     <Route
       {...rest}
@@ -69,9 +71,10 @@ class AuthHome extends Component {
           return <div></div>
         return (
             <div>
+              <Route authed={this.state.authed} exact path='/register' component={Register} />
               <PrivateRoute authed={this.state.authed} path='/' component={App} />
               <PublicRoute authed={this.state.authed} path='/login' component={Login} />
-              {/*<PublicRoute authed={this.state.authed} path='/register' component={Register} />*/}
+              
             </div>
         );
   }

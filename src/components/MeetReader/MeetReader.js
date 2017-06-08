@@ -11,9 +11,9 @@ import './MeetReader.css';
 import {Spin} from 'antd';
 
 // Firebase 
-import {config} from '../../config/constants';
+import {db} from '../../config/constants';
 import Rebase  from 're-base';
-var base = Rebase.createClass(config, 'TeamCaptain');
+var base = Rebase.createClass(db, 'TeamCaptain');
 
 
 class MeetReader extends Component {
