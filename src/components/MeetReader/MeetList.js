@@ -15,7 +15,6 @@ class MeetList extends Component {
 
   constructor() {
     super();
-
     this.state = {meets: {}}
   }
 
@@ -25,7 +24,7 @@ class MeetList extends Component {
     base.listenTo(path, {
         context : this,
         then(data) {
-            this.setState({meets: data}); // <-- throwing a warning because it's unmounted...
+            this.setState({meets: data});
     }});
   }
 

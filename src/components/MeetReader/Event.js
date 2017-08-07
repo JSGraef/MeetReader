@@ -9,9 +9,9 @@ class Event extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            expandedRowKeys: []
-        }
+        // this.state = {
+        //     expandedRowKeys: []
+        // }
     }
 
     render() {
@@ -78,13 +78,13 @@ class Event extends Component {
                 <Button.Group size='small'>
                     { this.props.prevEvent !== undefined &&
                         <Button>
-                            <Link to={`/meet/events/${this.props.meetid}/${this.props.prevEvent}`}><Icon type="left" />Previous Event</Link>
+                            <Link to={`/meet/${this.props.meetid}/events/${this.props.prevEvent}`}><Icon type="left" />Previous Event</Link>
                         </Button>
                     }
                     {
                         this.props.nextEvent !== undefined &&
                         <Button>
-                            <Link to={`/meet/events/${this.props.meetid}/${this.props.nextEvent}`}>Next Event<Icon type="right" /></Link>
+                            <Link to={`/meet/${this.props.meetid}/events/${this.props.nextEvent}`}>Next Event<Icon type="right" /></Link>
                         </Button>
                     }
                     </Button.Group>
