@@ -51,7 +51,8 @@ class MeetReader extends Component {
 
     return (
         <div>
-            <Link to={`${this.props.match.url}/events`}>Events</Link>
+            
+            <Route exact path={`/meet/:meetid`} render={ (props) => <Link to={`${this.props.match.url}/events`}>Events</Link> }/>
             <Route exact path={`/meet/:meetid/events`} render={ (props) => <MREvents events={this.state.events} {...props}/> }/>
             <Route path={`/meet/:meetid/events/:eventid`} render={ (props) => <MREvent events={this.state.events} {...props}/> }/>
             <Route path={`/meet/:meetid/team/:teamid`} render={ (props) => <MRTeam teams={this.state.teams} {...props}/> }/>
